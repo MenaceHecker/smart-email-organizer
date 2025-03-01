@@ -27,7 +27,7 @@ const SearchBar = () => {
         />
       </button>
       {isOpen && (
-        <div className="absolute right-0 mt-2 bg-white border rounded shadow-md p-2">
+        <div className="absolute right-0 mt-5 bg-white border rounded shadow-md p-2">
           <input
             ref={searchInputRef}
             type="text"

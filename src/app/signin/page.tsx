@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useEffect, FormEvent } from "react";
+import React, { useEffect, FormEvent, useState } from "react";
 import { useRouter } from "next/navigation";
+import OutlookIcon from "@assets/icons/OutlookIcon.svg";
 
 const SignInPage = () => {
   const router = useRouter();
-
+  const [rememberMe, setRememberMe] = useState(false);
   useEffect(() => {
     console.log("SignInPage Loaded");
     if (typeof window !== "undefined") {
@@ -27,8 +28,8 @@ const SignInPage = () => {
   };
 
   return (
-    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10 bg-white bg-opacity-80">
-      <div className="w-full max-w-md p-6 bg-white rounded-lg shadow-lg mx-auto">
+    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center z-10 bg-transparent bg-opacity-80">
+      <div className="w-full max-w-md p-6 bg-white bg-opacity-50 rounded-lg shadow-lg mx-auto">
         <h1 className="text-2xl font-bold mb-5 text-center">Sign In</h1>
 
         <form onSubmit={handleSubmit}>
@@ -52,6 +53,18 @@ const SignInPage = () => {
             />
           </div>
 
+          <div className="flex justify-between items-center mb-5">
+            <label className="flex items-center gap-2">
+              <input
+                type="checkbox"
+                checked={rememberMe}
+                onChange={() => setRememberMe(!rememberMe)}
+                className="form-checkbox text-blue-600"
+              />
+              Remember Me
+            </label>
+            <a href="#" className="text-blue-500 hover:underline">Forgot password?</a>
+          </div>
           <button
             type="submit"
             className="w-full p-2 bg-blue-500 text-white rounded text-lg cursor-pointer mb-5 hover:bg-blue-600"
@@ -88,9 +101,9 @@ const SignInPage = () => {
             onClick={handleOutlookSignIn}
             className="flex-1 p-2 bg-blue-600 text-white rounded text-sm flex items-center justify-center gap-2 hover:bg-blue-700"
           >
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="white">
-              <path d="M7.88 12.04q0 .45-.11.87-.1.41-.33.74-.22.33-.58.52-.37.2-.87.2t-.85-.2q-.35-.21-.57-.55-.22-.33-.33-.75-.1-.42-.1-.86t.1-.87q.1-.43.34-.76.22-.34.59-.54.36-.2.87-.2t.86.2q.35.21.57.55.22.34.31.77.1.43.1.88zm4.93 1.75q0-.21-.06-.4-.06-.19-.19-.35-.13-.17-.31-.29-.18-.12-.43-.12-.23 0-.4.11-.18.11-.31.28-.13.17-.2.35-.07.18-.07.39 0 .21.06.4.07.19.2.35.13.17.31.28.18.11.41.11.22 0 .39-.11.18-.1.31-.27.13-.17.19-.35.06-.18.06-.39z" />
-            </svg>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="white" width="24" height="24">
+  <path d="M2 5v14h20V5H2zm18 12H4V7h16v10zm-4.7-8.5c.6 0 1.2.2 1.7.6s.8 1 .8 1.6-.2 1.2-.6 1.7c-.4.5-1 .8-1.7.8-.6 0-1.2-.2-1.7-.6s-.8-1-.8-1.7c0-.6.2-1.2.6-1.7s1-.7 1.7-.7zM9 10v4H7v-4H6V9h3v1h-1zm7 1.5c-.2 0-.3.1-.5.2s-.2.2-.3.4-.1.3-.1.5.1.4.2.5.3.2.5.2.3-.1.5-.2.2-.3.3-.5.1-.3.1-.5-.1-.3-.2-.5-.3-.2-.5-.2z" />
+</svg>
             <span>Outlook</span>
           </button>
         </div>
