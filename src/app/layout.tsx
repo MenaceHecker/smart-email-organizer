@@ -45,9 +45,9 @@ export default function RootLayout({
           </div>
           <div className="flex items-center">
             <Link href="/" className="ml-2 mr-4 hover:underline">Home</Link>
-            <Link href="/dashboard" className="mr-4 hover:underline">Dashboard</Link>
-            <Link href="/signin" className="ml-4 hover:underline">Sign In</Link>
-            <Link href="/settings" className="hover:underline">Settings</Link>
+            <Link href="/dashboard" className="mr-4 ml-2 hover:underline">Dashboard</Link>
+            <Link href="/signin" className="ml-2 hover:underline">Sign In</Link>
+            <Link href="/settings" className="ml-2 hover:underline">Settings</Link>
             <img src={UserIcon.src} alt="User Icon" className="h-8 ml-2" />
           </div>
         </nav>

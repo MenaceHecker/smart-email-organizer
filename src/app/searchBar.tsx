@@ -1,10 +1,10 @@
-// SearchBar.tsx
 "use client";
 import React, { useState, useRef, useEffect } from "react";
 import searchBarIcon from "../assets/images/search-icon.png";
 
 const SearchBar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [searchText, setSearchText] = useState(""); 
   const searchInputRef = useRef<HTMLInputElement>(null);
 
   const toggleSearch = () => {
@@ -32,9 +32,10 @@ const SearchBar = () => {
             ref={searchInputRef}
             type="text"
             placeholder="Search Emails..."
+            value={searchText} 
+            onChange={(e) => setSearchText(e.target.value)} 
             className="border p-1 rounded"
           />
-          {/* Add search button or other elements as needed */}
         </div>
       )}
     </div>
