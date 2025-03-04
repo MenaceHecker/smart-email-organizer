@@ -28,7 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <AuthProvider> {/* ✅ Wrap only inside body to prevent server errors */}
+        <AuthProvider> {/* wraping only inside body to prevent server errors */}
           <video
             autoPlay
             loop
@@ -39,10 +39,12 @@ export default function RootLayout({
             Your browser does not support the video tag.
           </video>
           
-          {/* ✅ Navigation Bar */}
+          {/* navigation Bar */}
           <nav className="p-4 bg-transparent text-white fixed top-0 left-0 w-full z-50 flex items-center justify-between backdrop-blur-sm">
             <div className="flex items-center">
-              <img src={Logo.src} alt="EmailIQ Logo" className="h-8 mr-4" />
+            <Link href="/">
+              <img src={Logo.src} alt="EmailIQ Logo" className="h-8 mr-4 cursor-pointer" />
+            </Link>
               <h1 className="text-lg font-bold">Email Organizer</h1>
               <SearchBar />
             </div>

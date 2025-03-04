@@ -27,10 +27,9 @@ const SignInPage = () => {
           <div className="flex flex-col items-center">
             <p>Welcome, {session.user?.name}!</p>
             <img
-              src={session.user?.image || ""}
-              alt="User Avatar"
-              className="h-12 w-12 rounded-full mt-2"
-            />
+              src={session.user?.image || (session.user?.email?.includes("@outlook") ? "/default-avatar.png" : undefined)}
+            alt="User Avatar"
+            className="h-12 w-12 rounded-full mt-2"/>
             <button
               className="mt-4 px-4 py-2 bg-red-500 text-white rounded"
               onClick={() => signOut()}

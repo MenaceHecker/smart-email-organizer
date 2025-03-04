@@ -1,5 +1,6 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
+import AzureADProvider from "next-auth/providers/azure-ad";
 
 const handler = NextAuth({
   providers: [
@@ -7,10 +8,15 @@ const handler = NextAuth({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
     }),
+    AzureADProvider({
+      clientId: process.env.AZURE_AD_CLIENT_ID as string,
+      clientSecret: process.env.AZURE_AD_CLIENT_SECRET as string,
+      tenantId: process.env.AZURE_AD_TENANT_ID as string,
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/signin", // Redirect to custom sign-in page
+    signIn: "/signin",
   },
   callbacks: {
     async jwt({ token, account }) {
@@ -22,10 +28,10 @@ const handler = NextAuth({
     async session({ session, token }) {
       return {
         ...session,
-        accessToken: token.accessToken, // Ensures accessToken is included
+        accessToken: token.accessToken,
       };
     },
   },
 });
 
-export { handler as GET, handler as POST }; // Required for API routes in App Router
+export { handler as GET, handler as POST };
