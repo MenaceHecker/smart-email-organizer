@@ -8,7 +8,7 @@ interface Email {
 
 export async function GET() {
   const emails: Email[] = [
-    { id: 1, sender: "john@example.com", subject: "Meeting Reminder" },
+    { id: 1, sender: "joe@example.com", subject: "Meeting jimmy Reminder" },
     { id: 2, sender: "amazon@shopping.com", subject: "Your order has shipped!" },
     { id: 3, sender: "newsletter@tech.com", subject: "Latest Tech Updates" },
   ];
