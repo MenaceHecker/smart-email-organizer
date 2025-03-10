@@ -1,12 +1,17 @@
-import NextAuth from "next-auth";
+import NextAuth, { NextAuthOptions } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import AzureADProvider from "next-auth/providers/azure-ad";
 
-const handler = NextAuth({
+export const authOptions: NextAuthOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          scope: "openid email profile https://www.googleapis.com/auth/gmail.readonly",
+        },
+      },
     }),
     AzureADProvider({
       clientId: process.env.AZURE_AD_CLIENT_ID as string,
@@ -32,6 +37,7 @@ const handler = NextAuth({
       };
     },
   },
-});
+};
 
+const handler = NextAuth(authOptions);
 export { handler as GET, handler as POST };

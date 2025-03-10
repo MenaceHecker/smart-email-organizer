@@ -1,14 +1,34 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
+import { getToken } from "next-auth/jwt";
+import { google } from "googleapis";
 
-const emails = [
-  { id: 1, sender: "john@example.com", subject: "Meeting Reminder", body: "Don't forget our meeting tomorrow at 10 AM." },
-  { id: 2, sender: "amazon@shopping.com", subject: "Your order has shipped!", body: "Your order has been shipped and is on the way!" },
-  { id: 3, sender: "newsletter@tech.com", subject: "Latest Tech Updates", body: "Here's the latest in tech news..." },
-];
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
+  try {
+    const token = await getToken({ req });
 
-export async function GET(req: Request, { params }: { params: { id: string } }) {
-  const email = emails.find((e) => e.id === parseInt(params.id));
-  if (!email) return NextResponse.json({ error: "Email not found" }, { status: 404 });
+    if (!token || typeof token.accessToken !== "string" || !token.accessToken) {
+      console.error("Invalid or missing access token:", token);
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
-  return NextResponse.json(email);
+    const auth = new google.auth.OAuth2();
+    auth.setCredentials({ access_token: token.accessToken });
+
+    const gmail = google.gmail({ version: "v1", auth });
+
+    const emailData = await gmail.users.messages.get({
+      userId: "me",
+      id: params.id,
+    });
+
+    const headers = emailData.data.payload?.headers;
+    const subject = headers?.find((h) => h.name === "Subject")?.value || "No Subject";
+    const sender = headers?.find((h) => h.name === "From")?.value || "Unknown Sender";
+    const body = emailData.data.snippet || "No content available.";
+
+    return NextResponse.json({ id: params.id, sender, subject, body });
+  } catch (error) {
+    console.error("Error fetching email:", error);
+    return NextResponse.json({ error: "Failed to fetch email" }, { status: 500 });
+  }
 }
