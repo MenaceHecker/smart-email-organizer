@@ -12,7 +12,7 @@ export default function SplashScreen({ onFinish }: { onFinish: () => void }) {
       setProgress((prev) => {
         if (prev >= 100) {
           clearInterval(interval);
-          setTimeout(() => setDoneLoading(true), 800); 
+          setTimeout(() => setDoneLoading(true), 1000); 
           return 100;
         }
         return prev + 3; 
